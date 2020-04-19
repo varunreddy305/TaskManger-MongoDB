@@ -1,40 +1,40 @@
-const mongodb = require('mongodb').MongoClient;
+const { MongoClient, ObjectID } = require('mongodb');
 
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'Task-manager';
-
-mongodb.connect(connectionURL, { useUnifiedTopology: true }, (error, client) => {
-	if (error) {
-		return console.log('Unable to connect to database');
+// const id = new ObjectID();
+// console.log(id.getTimestamp());
+const tasks = [
+	{
+		description: 'Cook chicken',
+		completed: true
+	},
+	{
+		description: 'Learn Node.js',
+		completed: false
+	},
+	{
+		description: 'Go on a drive',
+		completed: true
+	},
+	{
+		description: 'Clean the house',
+		completed: false
 	}
-	const db = client.db(databaseName);
-	db.collection('Family members')
-		.insertMany([
-			{
-				name: 'Varun',
-				age: 25
-			},
-			{
-				name: 'Kirthi',
-				age: 20
-			},
-			{
-				name: 'Gopal',
-				age: 55
-			},
-			{
-				name: 'Vanaja',
-				age: 48
-			}
-		])
-		.then(res => {
-			console.log(res);
-		});
-	// db.collection('Family members')
-	// 	.deleteOne({
-	// 		name: 'Varun'
-	// 	})
-	// 	.then(res => {
-	// 		console.log('Rows affected',res.deletedCount);
-	// 	});
-});
+];
+
+MongoClient.connect(connectionURL, { useUnifiedTopology: true })
+	.then(client => {
+		const db = client.db(databaseName);
+		db.collection('Tasks')
+			.insertMany(tasks)
+			.then(res => {
+				console.log(res.insertedCount);
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	})
+	.catch(err => {
+		console.log('Unable to connect to database', err);
+	});
