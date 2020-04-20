@@ -1,0 +1,24 @@
+{
+  "name": "taskmanger-mongodb",
+  "version": "1.0.0",
+  "description": "mongo db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varunreddy305/TaskManger-MongoDB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/varunreddy305/TaskManger-MongoDB/issues"
+  },
+  "homepage": "https://github.com/varunreddy305/TaskManger-MongoDB#readme",
+  "dependencies": {
+    "mongodb": "^3.5.6",
+    "mongoose": "^5.9.9"
+  }
+}
