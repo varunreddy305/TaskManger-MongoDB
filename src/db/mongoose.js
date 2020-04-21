@@ -6,7 +6,7 @@ mongoose.connect(connectionUrl, { useNewUrlParser: true, useCreateIndex: true })
 
 const tasks = [
 	{
-		description: 'Cook chicken',
+		description: '   Cook chicken    ',
 		completed: true
 	},
 	{
@@ -14,8 +14,7 @@ const tasks = [
 		completed: false
 	},
 	{
-		description: 'Go on a drive',
-		completed: true
+		description: 'Go on a drive'
 	},
 	{
 		description: 'Clean the house',
@@ -25,10 +24,13 @@ const tasks = [
 
 const Tasks = mongoose.model('Task', {
 	description: {
-		type: String
+		type: String,
+		trim: true,
+		required: true
 	},
 	completed: {
-		type: Boolean
+		type: Boolean,
+		default: false
 	}
 });
 
