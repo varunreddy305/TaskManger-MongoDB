@@ -3,10 +3,12 @@ const validator = require('validator');
 
 const connectionUrl = 'mongodb://127.0.0.1:27017/TaskManagerApp';
 
-mongoose.connect(connectionUrl, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(connectionUrl, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }).catch(e => {
+	console.log(e.message);
+});
 
 const User = mongoose.model('User', {
-	name: {
+	username: {
 		type: String,
 		required: true,
 		trim: true
@@ -43,32 +45,4 @@ const User = mongoose.model('User', {
 		}
 	}
 });
-
-const user1 = new User({
-	name: '    V a r u n',
-	email: 'test@test.com',
-	password: 'password123'
-});
-
-// const user1 = {
-// 	name: '    V a r u n',
-// 	email: 'test@test.com',
-// 	password: 'password123'
-// };
-
-user1
-	.save()
-	.then(res => {
-		console.log(res);
-	})
-	.catch(e => {
-		console.log(e.message);
-	});
-
-// User.deleteOne(user1)
-// 	.then(res => {
-// 		console.log(res);
-// 	})
-// 	.catch(e => {
-// 		console.log(e);
-// 	});
+module.exports = { User };
