@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>User Details</title>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<form action="/validateUser" method="POST">
+			<div class="container">
+				<label>User name</label>
+				<input type="text" class="form-control" id="name" name="username" placeholder="Enter name" />
+				<br />
+				<label>User age</label>
+				<input type="number" class="form-control" id="age" name="age" placeholder="User age" />
+				<br />
+				<label>Email address</label>
+				<input type="email" class="form-control" id="Email" name="email" placeholder="Enter email" />
+				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+				<label>Password</label>
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+				<br />
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</div>
+		</form>
+	</body>
+</html>
+Î
