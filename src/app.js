@@ -12,54 +12,62 @@ app.get('/users', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/views/index.html'));
 });
 
-app.post('/postUser', (req, res) => {
+app.post('/postUser', async (req, res) => {
 	const user = new User(req.body);
-	user
-		.save()
-		.then(response => {
-			res.send(response).status(201);
-		})
-		.catch(e => {
-			res.send(e.message).status(500);
-		});
+	try {
+		await user.save();
+		res.send(user).status(201);
+	} catch (e) {
+		res.send(e.message).status(500);
+	}
 });
 
-app.get('/listUsers', (req, res) => {
-	User.find({})
-		.then(response => {
-			res.send(response).status(201);
-		})
-		.catch(e => {
-			res.status(500).send();
-		});
+app.get('/listUsers', async (req, res) => {
+	try {
+		const users = await User.find({});
+		res.send(users);
+	} catch (e) {
+		res.status(500).send();
+	}
 });
 
 app.get('/tasks', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/views/task.html'));
 });
 
-app.post('/postTask', (req, res) => {
+app.post('/postTask', async (req, res) => {
 	const task = new Tasks({
 		description: req.body.description,
 		completed: String2Boolean(req.body.completed)
 	});
-	task
-		.save()
-		.then(response => {
-			res.send(response).status(201);
-		})
-		.catch(e => {
-			res.send(e.message).status(500);
-		});
+	try {
+		await task.save();
+		res.send(task).status(201);
+	} catch (e) {
+		res.send(e.message).status(500);
+	}
 });
-app.get('/listTasks', (req, res) => {
-	Tasks.find({})
-		.then(response => {
-			res.send(response).status(201);
-		})
-		.catch(e => {
-			res.status(500).send();
-		});
+
+app.get('/tasks/:id', async (req, res) => {
+	const _id = req.params.id;
+	try {
+		const task = await Tasks.findById(_id);
+		if (!task) {
+			return res.status(404).send('Not found');
+		}
+		res.send(task);
+	} catch (e) {
+		res.status(500).send(e);
+	}
+});
+
+app.get('/listTasks', async (req, res) => {
+	try {
+		const tasks = await Tasks.find();
+		res.send(tasks).status(201);
+	} catch (e) {
+		res.status(500).send(e);
+	}
 });
 
 app.listen(port, () => console.log(`Listening at port${port}`));
