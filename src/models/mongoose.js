@@ -9,7 +9,7 @@ mongoose.connect(connectionUrl, {
 	useCreateIndex: true
 });
 
-const Tasks = mongoose.model('Task', {
+const taskSchema = mongoose.Schema({
 	description: {
 		type: String,
 		trim: true,
@@ -21,6 +21,12 @@ const Tasks = mongoose.model('Task', {
 	}
 });
 
+taskSchema.pre('save', async function (next) {
+	console.log(this);
+	next();
+});
+
+const Tasks = mongoose.model('Task', taskSchema);
 const String2Boolean = value => {
 	return value && value.toLowerCase() === 'true';
 };
