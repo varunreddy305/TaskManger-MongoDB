@@ -22,7 +22,7 @@ const Tasks = mongoose.model('Task', {
 });
 
 const String2Boolean = value => {
-	return value && value.toLowerCase() === 'true' ? true : false;
+	return value && value.toLowerCase() === 'true';
 };
 
 module.exports = { Tasks, String2Boolean };

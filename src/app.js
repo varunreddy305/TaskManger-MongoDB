@@ -5,6 +5,7 @@ const { Tasks, String2Boolean } = require('./models/mongoose');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, './public/views')));
 const port = process.env.PORT || 3000;
 
@@ -14,6 +15,7 @@ app.get('/users', (req, res) => {
 
 app.post('/postUser', async (req, res) => {
 	const user = new User(req.body);
+	console.log(req.body);
 	try {
 		await user.save();
 		res.send(user).status(201);
@@ -58,6 +60,35 @@ app.get('/tasks/:id', async (req, res) => {
 		res.send(task);
 	} catch (e) {
 		res.status(500).send(e);
+	}
+});
+
+app.patch('/updateTasks/:id', async (req, res) => {
+	const updates = Object.keys(req.body);
+	const allowedUpdated = ['description', 'completed'];
+	const isValidOperation = updates.every(update => allowedUpdated.includes(update));
+	if (!isValidOperation) {
+		return res.status(404).send({ error: 'Invalid updates!' });
+	}
+	try {
+		const task = await Tasks.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+		if (!task) {
+			return res.status(404).send('Not found');
+		}
+		res.send(task);
+	} catch (e) {
+		res.status(500).send('ghjghjg');
+	}
+});
+app.delete('/deleteTask/:id', async (req, res) => {
+	try {
+		const task = await Tasks.findByIdAndDelete(req.params.id);
+		if (!task) {
+			return res.status(404).send('Not found');
+		}
+		res.send(task);
+	} catch (e) {
+		res.status(404).send(e);
 	}
 });
 
