@@ -48,20 +48,37 @@ router.get('/users/me', auth, async (req, res) => {
 });
 
 const upload = multer({
-	dest: 'avatar/'
+	dest: 'avatar/',
+	limits: {
+		fileSize: 6000000
+	},
+	fileFilter(req, file, cb) {
+		if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+			cb(new Error('Please upload a valid file'));
+		}
+		cb(undefined, true);
+	}
 });
 
 router.get('/file', (req, res) => {
 	res.sendFile(path.join(__dirname, '../../public/upload.html'));
 });
 
-router.post('/upload', upload.single('avatar'), async (req, res) => {
-	console.log(req.file);
-	try {
-		res.send('Successfully uploaded');
-	} catch (e) {
-		res.send('Failed');
+router.post(
+	'/upload',
+	upload.single('avatar'),
+	async (req, res) => {
+		try {
+			req.filename = req.file.originalname;
+			console.log(req.file);
+			res.send('Successfully uploaded');
+		} catch (e) {
+			res.send(e.message);
+		}
+	},
+	(err, req, res, next) => {
+		res.status(400).send(err.message);
 	}
-});
+);
 
 module.exports = router;
