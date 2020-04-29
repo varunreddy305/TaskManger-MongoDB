@@ -2,6 +2,7 @@ const { User } = require('../models/userMongoose');
 const express = require('express');
 const path = require('path');
 const auth = require('../middleware/auth');
+const multer = require('multer');
 
 const router = new express.Router();
 
@@ -43,6 +44,23 @@ router.get('/users/me', auth, async (req, res) => {
 		res.send(req.user);
 	} catch (e) {
 		res.status(500).send();
+	}
+});
+
+const upload = multer({
+	dest: 'avatar/'
+});
+
+router.get('/file', (req, res) => {
+	res.sendFile(path.join(__dirname, '../../public/upload.html'));
+});
+
+router.post('/upload', upload.single('avatar'), async (req, res) => {
+	console.log(req.file);
+	try {
+		res.send('Successfully uploaded');
+	} catch (e) {
+		res.send('Failed');
 	}
 });
 
