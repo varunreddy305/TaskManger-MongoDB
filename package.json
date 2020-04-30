@@ -2,10 +2,10 @@
   "name": "taskmanger-mongodb",
   "version": "1.0.0",
   "description": "mongo db",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "jest --verbose",
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,17 @@
   },
   "homepage": "https://github.com/varunreddy305/TaskManger-MongoDB#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.1.0",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.6",
-    "mongoose": "^5.9.9"
+    "mongoose": "^5.9.9",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.3",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "jest": "^25.5.2"
   }
 }
