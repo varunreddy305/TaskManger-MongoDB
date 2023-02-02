@@ -19,6 +19,6 @@
   "homepage": "https://github.com/varunreddy305/TaskManger-MongoDB#readme",
   "dependencies": {
     "mongodb": "^3.5.6",
-    "mongoose": "^5.9.9"
+    "mongoose": "^5.13.15"
   }
 }
